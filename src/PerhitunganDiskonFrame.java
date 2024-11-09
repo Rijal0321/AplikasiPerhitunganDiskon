@@ -66,6 +66,11 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
         jSlider1.setMaximum(50);
         jSlider1.setMinorTickSpacing(5);
         jSlider1.setValue(5);
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
 
         riwayatPerhitungan.setColumns(20);
         riwayatPerhitungan.setRows(5);
@@ -170,6 +175,11 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
                 int selectedDiskon = Integer.parseInt(jComboBox1.getSelectedItem().toString().replace("%", ""));
                 jSlider1.setValue(selectedDiskon);           
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+                int sliderValue = jSlider1.getValue();
+                jComboBox1.setSelectedItem(sliderValue + "%");
+    }//GEN-LAST:event_jSlider1StateChanged
 
     /**
      * @param args the command line arguments
