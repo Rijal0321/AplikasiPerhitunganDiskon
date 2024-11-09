@@ -55,6 +55,11 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
         jLabel4.setText("Penghematan");
 
         btnHitung.setText("Hitung");
+        btnHitung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHitungActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "5%", "10%", "15%", "20%", "25%", "50%" }));
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +185,39 @@ public class PerhitunganDiskonFrame extends javax.swing.JFrame {
                 int sliderValue = jSlider1.getValue();
                 jComboBox1.setSelectedItem(sliderValue + "%");
     }//GEN-LAST:event_jSlider1StateChanged
+
+    private void btnHitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHitungActionPerformed
+        try {
+            // Ambil harga asli dari input
+            double hargaAsli = Double.parseDouble(hargaAsliField.getText());
+            
+            // Ambil persentase diskon dari ComboBox
+            int diskon = Integer.parseInt(jComboBox1.getSelectedItem().toString().replace("%", ""));
+            
+            // Cek kode kupon dan tambahkan diskon jika ada
+            String kodeKupon = kodeKuponField.getText();
+            int diskonTambahan = 0;
+            if (kodeKupon.equalsIgnoreCase("DISKON10")) {
+                diskonTambahan = 10;
+            } else if (kodeKupon.equalsIgnoreCase("DISKON20")) {
+                diskonTambahan = 20;
+            }
+            
+            // Hitung total diskon (persentase diskon + diskon tambahan)
+            int totalDiskon = diskon + diskonTambahan;
+            double potongan = hargaAsli * totalDiskon / 100;
+            double hargaAkhir = hargaAsli - potongan;
+
+            // Tampilkan hasil ke field Harga Akhir dan Penghematan
+            hargaAkhirField.setText(String.format("%.2f", hargaAkhir));
+            penghematanField.setText(String.format("%.2f", potongan));
+            
+            // Tambahkan ke riwayat perhitungan
+            riwayatPerhitungan.append("Harga Asli: Rp" + hargaAsli + ", Diskon: " + totalDiskon + "%, Harga Akhir: Rp" + hargaAkhir + "\n");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Masukkan angka yang valid untuk harga asli.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnHitungActionPerformed
 
     /**
      * @param args the command line arguments
